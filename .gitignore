@@ -1,0 +1,22 @@
+.idea/
+.DS_Store
+.ipynb_checkpoints
+
+__pycache__
+*.pyc
+
+/_temp/
+
+Data/
+
+/notebooks/_tmp*
+/notebooks/.ipynb_checkpoints
+
+/_tmp*
+code_test*
+
+# Distribution / packaging
+.Python
+build/
+*.egg-info/
+dist/
