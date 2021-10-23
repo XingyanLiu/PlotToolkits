@@ -12,7 +12,7 @@ Data/
 /notebooks/_tmp*
 /notebooks/.ipynb_checkpoints
 
-/_tmp*
+/_temp
 code_test*
 
 # Distribution / packaging

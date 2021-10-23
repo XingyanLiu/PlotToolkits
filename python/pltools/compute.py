@@ -208,6 +208,7 @@ def zscore(X, with_mean=True, scale=True, ):
         X_new = pd.DataFrame(X_new, index=X.index, columns=X.columns)
     return X_new
 
+
 def _order_contingency_array(mat, axis=1):
     """
     axis = 0: re-order the columns

@@ -13,6 +13,7 @@ import logging
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
+import matplotlib.colors as mcolors
 
 
 def _save_with_adjust(fig, fpath=None, figsize=None, **kwds):
@@ -57,7 +58,7 @@ def view_color_map(cmap='viridis', n=None, figsize=(6, 2), s=150, k=20,
     """
     if not isinstance(cmap, (np.ndarray, list)):
         #        from matplotlib import cm
-        cmp = mpl.cm.get_cmap(cmap, n)
+        cmp = plt.cm.get_cmap(cmap, n)
         n = 20 if n is None else n
         cmp = [cmp(i) for i in range(n)]
     else:
@@ -84,6 +85,33 @@ def get_colors(cmap='Spectral', n=5, to_hex=True):
         return [mcolors.to_hex(c) for c in colors]
     else:
         return colors
+
+
+def view_colors(colors, n_cols=4, txt_offset=0.4, margin=0.2,
+                fname=None, dpi=200):
+    """ pre-view colors
+
+    :param colors: a list of hex-color strings or RGB tuples
+    :param n_cols:
+    :param txt_offset:
+    :param margin: margin of the figure
+    :param fname: filepath to save
+    :param dpi: DPI of the saved image
+    :return:
+    """
+    figsize = (n_cols * 1.5, len(colors) / n_cols * 1.5)
+    fig, ax = plt.subplots(figsize=figsize)
+    ax.set_axis_off()
+    for i, hex_str in enumerate(colors):
+        x, y = i % n_cols, - (i // n_cols)
+        ax.scatter(x, y, color=hex_str, s=800)
+        ax.text(x, y - txt_offset, str(hex_str), ha="center", color=hex_str,
+                fontsize=18)
+    ax.set_ylim(y - txt_offset - margin, margin)
+    ax.set_xlim(-margin, (n_cols - 1) + margin)
+    if fname is not None:
+        ax.figure.savefig(fname, bbox_inches="tight", dpi=dpi)
+    return ax
 
 
 def __test__():
