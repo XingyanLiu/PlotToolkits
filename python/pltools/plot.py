@@ -33,7 +33,32 @@ Example:
 
 
 # In[]
+def view_colors(colors, n_cols=3, txt_offset=0.4,
+                color_labels=None,
+                margin=0.2, fname=None):
+    """  pre-view (HEX, RGB) colors
 
+    Examples
+    --------
+    >>> hex_strings = ["#F6EABE", "#87AAAA", "#FF9292"]
+    >>> ax = view_colors(hex_strings)
+    """
+    if color_labels is None:
+        color_labels = [str(c) for c in colors]
+    figsize = (n_cols * 1.5, len(colors) / n_cols * 1.5)
+    fig, ax = plt.subplots(figsize=figsize)
+    ax.set_axis_off()
+    for i, hex_str in enumerate(colors):
+        x, y = i % n_cols, - (i // n_cols)
+        ax.scatter(x, y, color=hex_str, s=800)
+        ax.text(x, y - txt_offset, color_labels[i],
+                ha="center", color=hex_str,
+                fontsize=18)
+    ax.set_ylim(y - txt_offset - margin, margin)
+    ax.set_xlim(-margin, (n_cols - 1) + margin)
+    if fname is not None:
+        ax.figure.savefig(fname, bbox_inches="tight", dpi=200)
+    return ax
 
 
 def diy_cmap_grey_bg(name_fg='RdPu', low=0.15, rm_high=0.01, n=100):
